@@ -218,3 +218,11 @@ ipython_config.py
 
 # Custom data
 /*.txt
+.idea/.gitignore
+.idea/inspectionProfiles/
+.idea/misc.xml
+.idea/modules.xml
+.idea/simmynator.iml
+.idea/vcs.xml
+data/inputs/raw/bible_ita.txt
+data/inputs/raw/simmy_join.txt
