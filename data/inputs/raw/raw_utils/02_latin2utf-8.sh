@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#!/usr/bin/env bash
-cd ..
 
 echo "--------------------"
 echo "Convert file input from latin to utf-8 encoding"

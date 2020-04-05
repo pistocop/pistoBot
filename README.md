@@ -1,4 +1,4 @@
-# 🤖 simmynator
+# 🤖 [ simmynator | pistoBot ]
 
 - 🎯 Try to create a system that write like me.
 
