@@ -11,8 +11,6 @@ import nltk
 from typing import Dict, List, Tuple
 from os.path import basename, normpath
 
-from scipy.integrate._ode import vode
-
 
 def read_dataset(file_path: str, file_encoding: str = "utf-8") -> str:
     text = open(file_path, 'r', encoding=file_encoding).read()

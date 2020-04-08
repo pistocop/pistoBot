@@ -205,24 +205,22 @@ dmypy.json
 ### JupyterNotebooks template
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
-
-.ipynb_checkpoints
 */.ipynb_checkpoints/*
 
 # IPython
-profile_default/
-ipython_config.py
 
 # Remove previous ipynb_checkpoints
 #   git rm -r .ipynb_checkpoints/
 
-# Custom data
-/*.txt
 .idea/.gitignore
 .idea/inspectionProfiles/
 .idea/misc.xml
 .idea/modules.xml
 .idea/simmynator.iml
 .idea/vcs.xml
-data/inputs/raw/bible_ita.txt
-data/inputs/raw/simmy_join.txt
+.idea/other.xml
+.idea/pistoBot.iml
+
+# Custom data
+**/*.txt
+!requirements.txt
