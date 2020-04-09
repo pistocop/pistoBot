@@ -1,15 +1,21 @@
+"""
+Code used to study the TF official code:
+https://www.tensorflow.org/tutorials/text/text_generation
+"""
+import datetime
+import os
 import sys
 import logging
 import argparse
-from itertools import dropwhile
+from typing import Dict, List, Tuple
+from os.path import basename, normpath
 
 import tensorflow as tf
 import knockknock
-import humanfriendly
 import numpy as np
 import nltk
-from typing import Dict, List, Tuple
-from os.path import basename, normpath
+
+nltk.download("punkt")
 
 
 def read_dataset(file_path: str, file_encoding: str = "utf-8") -> str:
@@ -44,20 +50,28 @@ def _custom_parser(text: str, lowercase: bool, stop_words: List[str] = None) -> 
 
 def split_input_target(chunk):
     input_text = chunk[:-1]
-    target_text = chunk[-1]
+    target_text = chunk[1:]
     return input_text, target_text
 
 
 def run():
+    """
+    [My notes]
+
+    Note 1: we will predict not only one token, but a phrase of len `input_seq_length`, where
+            the system hides the first token, and a new token will be predicted
+    """
     # TODO move as program input
     input_file_path = "./data/inputs/raw/simmy_join.txt"
     input_file_encoding = "utf-8"
     input_token_level = "word"
-    input_seq_length = 2
+    input_seq_length = 3
     input_lowercase = True
     input_batch_size = 64
     input_buffer_size = None
     # -----------
+
+    tf.random.set_seed(42)
 
     # Dataset
     dataset_text = read_dataset(input_file_path, input_file_encoding)
@@ -71,15 +85,16 @@ def run():
     dataset_ml = dataset_ml.batch(batch_size=input_seq_length + 1, drop_remainder=True)  # +1 is the label
     dataset_ml = dataset_ml.map(split_input_target)
     buffer_size = input_buffer_size if input_buffer_size else len(dataset_encoded)
-    dataset_ml.shuffle(buffer_size, seed=42, reshuffle_each_iteration=True)
-    dataset_batches = dataset_ml.batch(input_batch_size, drop_remainder=True)
+    dataset_ml = dataset_ml.shuffle(buffer_size, reshuffle_each_iteration=True)
+    dataset_ml = dataset_ml.batch(input_batch_size, drop_remainder=True)
 
     logging.info("----------------------------")
     logging.info("[Example of ML batch]")
     logging.info("train --> label")
-    for x_batch, y_batch in dataset_batches.take(1):
-        for idx, (x, y) in enumerate(zip(x_batch, y_batch)):
-            logging.info(f"{idx} | {text_decoder[x.numpy()]} --> {text_decoder[y]}")
+    for x_batch, y_batch in dataset_ml.take(1):
+        # Take one batch
+        for idx, (batch_el_x, batch_el_y) in enumerate(zip(x_batch, y_batch)):
+            logging.info(f"{idx} | {text_decoder[batch_el_x.numpy()]} --> {text_decoder[batch_el_y.numpy()]}")
     logging.info("----------------------------")
 
     # Model
@@ -87,6 +102,7 @@ def run():
     input_embedding_dim = 256
     input_rnn_units = 1024
     input_dropout = 0.3
+    input_epochs = 10
     # ---------------------------
     model = tf.keras.Sequential(name="my_vanilla_rnn")
     model.add(tf.keras.layers.Embedding(input_dim=vocab_size,
@@ -99,9 +115,33 @@ def run():
                                   dropout=input_dropout))
     model.add(tf.keras.layers.Dense(vocab_size))
     logging.info(model.summary())
-    for x, y in dataset_batches.take(1):
-        p = model(x)
-        logging.info(f"prediction shape: {p.shape} | [batch, seq_len, vocab_size]")
+
+    # Network test (from ingestion to prediction)
+    for x, y in dataset_ml.take(1):
+        batch_prediction_example = model(x)
+        logging.info(f"prediction shape: {batch_prediction_example.shape} | [batch, seq_len, vocab_size]")
+
+    # take 1 element according to categorical distribution given by last NN dense layer
+    # Note: It is important to sample from this distribution as taking the argmax
+    # of the distribution can easily get the model stuck in a loop.
+    sampled_indices = tf.random.categorical(batch_prediction_example[0], num_samples=1)
+    sampled_indices = tf.squeeze(sampled_indices, axis=-1).numpy()
+    logging.info("Example Input: {}".format(repr(" ".join(text_decoder[x[0].numpy()]))))
+    logging.info("Example NN output: {}".format(repr(" ".join(text_decoder[sampled_indices]))))
+
+    # NN train
+    def loss(labels, logits):
+        return tf.keras.losses.sparse_categorical_crossentropy(labels, logits, from_logits=True)
+
+    example_batch_loss = loss(x, batch_prediction_example)
+
+    model.compile(optimizer='adam', loss=loss)
+    checkpoint_dir = 'data/models_trained/{}'.format(datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S'))
+    checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt_{epoch}")  # The system will fill _epoch_
+    checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_prefix,
+                                                             save_weights_only=True)
+    history = model.fit(dataset_ml, epochs=input_epochs, callbacks=[checkpoint_callback])
+    logging.info("Training completed")
     pass
 
 
