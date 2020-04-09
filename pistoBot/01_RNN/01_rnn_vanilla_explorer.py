@@ -80,6 +80,7 @@ def run():
     text_encoder, text_decoder = create_vocabulary(dataset_text)
     vocab_size = len(text_encoder)
     logging.info(f"[{basename(input_file_path)} is composed by {len(dataset_text)}|{vocab_size} tot|unique tokens]")
+
     dataset_encoded = input_encoder(dataset_text, text_encoder)
     dataset_ml = tf.data.Dataset.from_tensor_slices(dataset_encoded)
     dataset_ml = dataset_ml.batch(batch_size=input_seq_length + 1, drop_remainder=True)  # +1 is the label

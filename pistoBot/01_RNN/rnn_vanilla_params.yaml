@@ -1,0 +1,14 @@
+data:
+  file_path: "./data/inputs/raw/simmy_join.txt"
+  file_encoding: "utf-8"
+  token_level: "word"
+  seq_length: 3
+  lowercase: True
+  batch_size: 64
+  buffer_size: 0 # Buffer used to shuffle the data
+ml:
+  embedding_dim: 256
+  rnn_units: 1024
+  dropout: 0.3
+  epochs: 10
+  save_path: "data/models_trained/"
