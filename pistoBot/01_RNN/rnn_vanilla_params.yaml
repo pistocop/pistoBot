@@ -11,4 +11,4 @@ ml:
   rnn_units: 1024
   dropout: 0.3
   epochs: 10
-  save_path: "data/models_trained/"
+  save_path: "../../data/models_trained/"

@@ -18,6 +18,8 @@ from typing import Tuple, List
 
 from tensorflow.python.data.ops.dataset_ops import BatchDataset
 from tensorflow.python.keras.engine.sequential import Sequential
+
+sys.path.append("../..")  # needed 4 utils imports - created according to launcher
 from pistoBot.utils.general_utils import load_yaml, my_init
 from pistoBot.utils.dataset_utils import read_dataset, text_parser, text_tokenizer, create_vocabulary, print_input_batch
 
@@ -97,7 +99,7 @@ def build_nn(params_ml: dict, vocab_size: int, seq_length: int, batch_size: int)
 
 def train_model(model, dataset_ml, params_ml):
     timestamp = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')
-    model_path = os.path.join(params_ml['save_path'], timestamp)
+    model_path = os.path.join(params_ml['save_path'], f"01_rnn_{timestamp}")
     checkpoint_prefix = os.path.join(model_path, "ckpt_{epoch}")  # The system will fill _epoch_
     checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_prefix,
                                                              save_weights_only=True)

@@ -14,7 +14,6 @@ import tensorflow as tf
 import knockknock
 import numpy as np
 import nltk
-
 nltk.download("punkt")
 
 
