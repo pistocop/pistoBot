@@ -4,13 +4,13 @@ data:
   token_level: "word"
   seq_length: 3
   lowercase: True
-  batch_size: 64
+  batch_size: 128
   buffer_size: 0 # Buffer used to shuffle the data. 0 for size = len(data)
 ml:
   embedding_dim: 256
   rnn_units: 1024
   dropout: 0.3
-  epochs: 1
+  epochs: 30
   save_path: "../../data/models_trained/" # "./data/models_trained/"
 generation:
   gen_start_string: "ciao"

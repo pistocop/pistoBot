@@ -11,5 +11,3 @@ python 02_rnn_vanilla.py -v
 cd ../../colab/
 
 bash ./download_models_trained.sh
-
-
