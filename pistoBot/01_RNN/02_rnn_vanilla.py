@@ -203,7 +203,7 @@ def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml
 
 # ----------------------
 def run(path_params: str):
-    path_params = "./pistoBot/01_RNN/rnn_vanilla_params.yaml"
+    # path_params = "./pistoBot/01_RNN/rnn_vanilla_params.yaml"
     # Load params
     params = load_yaml(path_params)
     params_data = params['data']
