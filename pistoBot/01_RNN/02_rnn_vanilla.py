@@ -6,6 +6,7 @@ Note: tried to "refactor" the code. Don't do it.
 Takeaway: don't focus too much on code extendibility
 """
 import datetime
+import json
 import os
 import sys
 import logging
@@ -13,9 +14,11 @@ import argparse
 import numpy as np
 import tensorflow as tf
 
-from os.path import basename, normpath
+from os.path import basename, normpath, join
 from typing import Tuple, List
 
+import yaml
+from numpy.core._multiarray_umath import ndarray
 from tensorflow.python.data.ops.dataset_ops import BatchDataset
 from tensorflow.python.keras.engine.sequential import Sequential
 
@@ -29,8 +32,8 @@ def dataset_preprocessor(file_path: str,
                          token_level: str,
                          lowercase: bool) -> Tuple[List[str], dict, np.ndarray]:
     text = read_dataset(file_path, file_encoding)
-    text = text_parser(text, lowercase=lowercase)
-    text_tokenized = text_tokenizer(text, token_level)
+    text = text_parser(text, lowercase=lowercase)  # TODO we will do the same in generation...
+    text_tokenized = text_tokenizer(text, token_level)  # TODO we will do the same in generation...
     token2idx, idx2token = create_vocabulary(text_tokenized)
     logging.debug(f"Text composed by ({len(text)}|{len(token2idx)}) (tot|unique) tokens")
     return text_tokenized, token2idx, idx2token
@@ -64,15 +67,14 @@ def print_model_exploration(model, dataset_ml, idx2token):
     for input_x, label_y in dataset_ml.take(1):
         batch_prediction_example = model(input_x)
         logging.info(f"prediction shape: {batch_prediction_example.shape} | [batch, seq_len, vocab_size]")
-
-    # take 1 element according to categorical distribution given by last NN dense layer
-    # Note: It is important to sample from this distribution as taking the argmax
-    # of the distribution can easily get the model stuck in a loop.
-    sampled_indices = tf.random.categorical(batch_prediction_example[0], num_samples=1)
-    sampled_indices = tf.squeeze(sampled_indices, axis=-1).numpy()
-    logging.debug("Example Input: {}".format(repr(" ".join(idx2token[input_x[0].numpy()]))))
-    logging.debug("Example NN output: {}".format(repr(" ".join(idx2token[sampled_indices]))))
-    logging.debug("Example NN expected: {}".format(repr(" ".join(idx2token[label_y[0].numpy()]))))
+        # take 1 element according to categorical distribution given by last NN dense layer
+        # Note: It is important to sample from this distribution as taking the argmax
+        # of the distribution can easily get the model stuck in a loop.
+        sampled_indices = tf.random.categorical(batch_prediction_example[0], num_samples=1)
+        sampled_indices = tf.squeeze(sampled_indices, axis=-1).numpy()
+        logging.debug("Example Input: {}".format(repr(" ".join(idx2token[input_x[0].numpy()]))))
+        logging.debug("Example NN output: {}".format(repr(" ".join(idx2token[sampled_indices]))))
+        logging.debug("Example NN expected: {}".format(repr(" ".join(idx2token[label_y[0].numpy()]))))
 
 
 def build_nn(params_ml: dict, vocab_size: int, seq_length: int, batch_size: int) -> Sequential:
@@ -107,11 +109,106 @@ def train_model(model, dataset_ml, params_ml):
     return history, model_path
 
 
+def save_model_info(params: dict, model_path: str, token2idx: dict, idx2token: np.ndarray):
+    params_path = join(model_path, 'params.yaml')
+    token2idx_path = join(model_path, 'token2idx.json')
+    idx2token_path = join(model_path, 'idx2token.txt')
+
+    params["model_dir"] = basename(model_path)
+    with open(params_path, 'w') as f:
+        yaml.dump(params, f, default_flow_style=False)
+    logging.debug(f"Model params saved at {params_path}")
+
+    with open(token2idx_path, 'w') as f:
+        json.dump(token2idx, f)
+    logging.debug(f"token2idx saved at {token2idx_path}")
+
+    with open(idx2token_path, 'w') as f:
+        np.savetxt(f, idx2token, fmt='%s')
+    logging.debug(f"idx2token saved at {idx2token_path}")
+
+
+# ----------------------
+# TODO - refactory generative approach
+
+def do_generation(model,
+                  start_string: str,
+                  gen_length: int,
+                  n_generations: int,
+                  temperature: float,
+                  token2idx: dict,
+                  idx2token: np.ndarray,
+                  lowercase,
+                  token_level):
+    start_string = text_parser(start_string, lowercase=lowercase)
+    start_string_tokens = text_tokenizer(start_string, token_level)
+
+    input_eval = [token2idx[s] for s in start_string_tokens]
+    input_eval = tf.expand_dims(input_eval, 0)
+
+    gen_sep = "\n------------------------------------------\n"
+    word_sep = ' ' if token_level == "word" else ''
+    texts_generated = []
+    for n_gen in range(n_generations):
+        tokens_generated = []
+        model.reset_states()
+        for i in range(gen_length):
+            predictions = model(input_eval)
+            # remove the batch dimension
+            predictions = tf.squeeze(predictions, 0)
+
+            # using a categorical distribution to predict the character returned by the model
+            predictions = predictions / temperature
+            predicted_id = tf.random.categorical(predictions, num_samples=1)[-1, 0].numpy()
+
+            # We pass the predicted character as the next input to the model
+            # along with the previous hidden state
+            input_eval = tf.expand_dims([predicted_id], 0)
+
+            tokens_generated.append(idx2token[predicted_id])
+        text = word_sep.join(tokens_generated)
+        texts_generated.append(text)
+        texts_generated.append(gen_sep)
+
+    return texts_generated
+
+
+# TODO - create package for generating system
+def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml, token2idx):
+    model = build_nn(params_ml=params_ml,
+                     vocab_size=len(token2idx),
+                     seq_length=params_data["seq_length"],
+                     batch_size=1)
+    model.load_weights(tf.train.latest_checkpoint(model_path))
+    model.build(tf.TensorShape([1, None]))
+    text_generated = do_generation(model,
+                                   params_gen['gen_start_string'],
+                                   params_gen['gen_length'],
+                                   params_gen['n_generations'],
+                                   params_gen['temperature'],
+                                   token2idx, idx2token,
+                                   params_data['lowercase'],  # TODO we will do the same in generation...
+                                   params_data['token_level'])  # TODO we will do the same in generation...
+    timestamp = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')
+    try:
+        os.mkdir(join(model_path, 'text_generated'))
+    except FileExistsError:
+        logging.debug(f"Folder '{model_path}/text_generated' already exist")
+    text_generated_path = join(model_path, 'text_generated', f'{timestamp}.txt')
+
+    with open(text_generated_path, 'w') as f:
+        f.write(''.join(text_generated))
+    logging.debug(f"Text generated at {text_generated_path}")
+
+
+# ----------------------
 def run(path_params: str):
+    path_params = "./pistoBot/01_RNN/rnn_vanilla_params.yaml"
     # Load params
     params = load_yaml(path_params)
     params_data = params['data']
     params_ml = params['ml']
+    params_gen = params['generation']
     logging.info(f"Input params:{params}")
 
     # Load input
@@ -138,14 +235,18 @@ def run(path_params: str):
         print_model_exploration(model, dataset_ml, idx2token)
 
     # Train model
-    train_model(model, dataset_ml, params_ml)
-
+    logging.info("Training started")
+    history, model_path = train_model(model, dataset_ml, params_ml)
     logging.info("Training completed")
+    save_model_info(params, model_path, token2idx, idx2token)
+
+    # Generate examples
+    generate_text_main(idx2token, model_path, params_data, params_gen, params_ml, token2idx)
 
 
 def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
-    parser.add_argument("--path_params", help="Path to vanilla rnn YAML params", default="./rnn_vanilla_params.yaml")
+    parser.add_argument("--path_params", help="Path to rnn YAML params", default="./rnn_vanilla_params.yaml")
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     args = parser.parse_args(argv[1:])
     loglevel = logging.DEBUG if args.verbose else logging.INFO

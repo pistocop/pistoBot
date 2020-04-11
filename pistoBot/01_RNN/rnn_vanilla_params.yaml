@@ -1,14 +1,19 @@
 data:
-  file_path: "../../data/inputs/personal/simmy_join.txt"
+  file_path: "../../data/inputs/personal/simmy_join.txt" # "./data/inputs/personal/simmy_join.txt"
   file_encoding: "utf-8"
   token_level: "word"
   seq_length: 3
   lowercase: True
   batch_size: 64
-  buffer_size: 0 # Buffer used to shuffle the data
+  buffer_size: 0 # Buffer used to shuffle the data. 0 for size = len(data)
 ml:
   embedding_dim: 256
   rnn_units: 1024
   dropout: 0.3
-  epochs: 10
-  save_path: "../../data/models_trained/"
+  epochs: 1
+  save_path: "../../data/models_trained/" # "./data/models_trained/"
+generation:
+  gen_start_string: "ciao"
+  gen_length: 5 # Note 1 token = 1 <token_level>
+  n_generations: 200
+  temperature: 1.0
