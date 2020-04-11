@@ -4,8 +4,9 @@ import argparse
 from os.path import basename, normpath
 from google.colab import files
 
+
 def run(file_path: str):
-    files.download("/test/")
+    files.download(file_path)
     logging.info("Download done")
 
 
