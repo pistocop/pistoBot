@@ -223,5 +223,6 @@ dmypy.json
 
 # Custom data
 **/*.txt
+**/*.zip
 !requirements.txt
 data/models_trained/01_rnn*

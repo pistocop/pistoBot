@@ -1,5 +1,5 @@
 data:
-  file_path: "../../data/inputs/personal/simmy_join.txt" # "./data/inputs/personal/simmy_join.txt"
+  file_path: "./data/inputs/personal/simmy_join.txt"
   file_encoding: "utf-8"
   token_level: "word"
   seq_length: 3
@@ -11,9 +11,8 @@ ml:
   rnn_units: 1024
   dropout: 0.3
   epochs: 30
-  save_path: "../../data/models_trained/" # "./data/models_trained/"
+  save_path: "./data/models_trained/"
 generation:
-  gen_start_string: "ciao"
-  gen_length: 5 # Note 1 token = 1 <token_level>
-  n_generations: 200
+  gen_length: 10
+  n_generations: 100 # Each generation will start with one random token
   temperature: 1.0

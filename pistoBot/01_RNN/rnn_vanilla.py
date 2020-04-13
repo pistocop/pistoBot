@@ -8,6 +8,7 @@ Takeaway: don't focus too much on code extendibility
 import datetime
 import json
 import os
+import random
 import sys
 import logging
 import argparse
@@ -18,13 +19,26 @@ from os.path import basename, normpath, join
 from typing import Tuple, List
 
 import yaml
-from numpy.core._multiarray_umath import ndarray
 from tensorflow.python.data.ops.dataset_ops import BatchDataset
 from tensorflow.python.keras.engine.sequential import Sequential
 
-sys.path.append("../..")  # needed 4 utils imports - created according to launcher
+sys.path.append("./")  # needed 4 utils imports - created according to launcher
 from pistoBot.utils.general_utils import load_yaml, my_init
-from pistoBot.utils.dataset_utils import read_dataset, text_parser, text_tokenizer, create_vocabulary, print_input_batch
+from pistoBot.utils.dataset_utils import read_dataset, text_parser, text_tokenizer, create_vocabulary
+
+
+# ---------------
+# Data managers
+# ---------------
+def print_input_batch(dataset_ml, idx2token: np.ndarray):
+    logging.info("----------------------------")
+    logging.info("[Example of ML batch]")
+    logging.info("train --> label")
+    for x_batch, y_batch in dataset_ml.take(1):
+        # Take one batch
+        for idx, (batch_el_x, batch_el_y) in enumerate(zip(x_batch, y_batch)):
+            logging.info(f"{idx} | {idx2token[batch_el_x.numpy()]} --> {idx2token[batch_el_y.numpy()]}")
+    logging.info("----------------------------")
 
 
 def dataset_preprocessor(file_path: str,
@@ -32,8 +46,8 @@ def dataset_preprocessor(file_path: str,
                          token_level: str,
                          lowercase: bool) -> Tuple[List[str], dict, np.ndarray]:
     text = read_dataset(file_path, file_encoding)
-    text = text_parser(text, lowercase=lowercase)  # TODO we will do the same in generation...
-    text_tokenized = text_tokenizer(text, token_level)  # TODO we will do the same in generation...
+    text = text_parser(text, lowercase=lowercase)
+    text_tokenized = text_tokenizer(text, token_level)
     token2idx, idx2token = create_vocabulary(text_tokenized)
     logging.debug(f"Text composed by ({len(text)}|{len(token2idx)}) (tot|unique) tokens")
     return text_tokenized, token2idx, idx2token
@@ -76,6 +90,10 @@ def print_model_exploration(model, dataset_ml, idx2token):
         logging.debug("Example NN output: {}".format(repr(" ".join(idx2token[sampled_indices]))))
         logging.debug("Example NN expected: {}".format(repr(" ".join(idx2token[label_y[0].numpy()]))))
 
+
+# ---------------
+# NN managers
+# ---------------
 
 def build_nn(params_ml: dict, vocab_size: int, seq_length: int, batch_size: int) -> Sequential:
     model = tf.keras.Sequential(name="my_vanilla_rnn")
@@ -128,30 +146,35 @@ def save_model_info(params: dict, model_path: str, token2idx: dict, idx2token: n
     logging.debug(f"idx2token saved at {idx2token_path}")
 
 
-# ----------------------
-# TODO - refactory generative approach
+# ---------------
+# Gen managers
+# ---------------
 
 def do_generation(model,
-                  start_string: str,
                   gen_length: int,
                   n_generations: int,
                   temperature: float,
                   token2idx: dict,
                   idx2token: np.ndarray,
-                  lowercase,
                   token_level):
-    start_string = text_parser(start_string, lowercase=lowercase)
-    start_string_tokens = text_tokenizer(start_string, token_level)
-
-    input_eval = [token2idx[s] for s in start_string_tokens]
-    input_eval = tf.expand_dims(input_eval, 0)
-
-    gen_sep = "\n------------------------------------------\n"
+    # start_string = text_parser(start_string, lowercase=lowercase)
+    # start_string_tokens = text_tokenizer(start_string, token_level)
+    #
+    # input_eval = [token2idx[s] for s in start_string_tokens]
+    # input_eval = tf.expand_dims(input_eval, 0)
     word_sep = ' ' if token_level == "word" else ''
     texts_generated = []
+
     for n_gen in range(n_generations):
+        start_token = random.choice(list(token2idx.keys()))
+        gen_sep = f"\n---------------[ '{start_token}' - {temperature} ]----------------\n"
+        texts_generated.append(gen_sep)
+
+        input_eval = [token2idx[start_token]]
+        input_eval = tf.expand_dims(input_eval, 0)
         tokens_generated = []
         model.reset_states()
+
         for i in range(gen_length):
             predictions = model(input_eval)
             # remove the batch dimension
@@ -168,12 +191,10 @@ def do_generation(model,
             tokens_generated.append(idx2token[predicted_id])
         text = word_sep.join(tokens_generated)
         texts_generated.append(text)
-        texts_generated.append(gen_sep)
 
     return texts_generated
 
 
-# TODO - create package for generating system
 def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml, token2idx):
     model = build_nn(params_ml=params_ml,
                      vocab_size=len(token2idx),
@@ -182,13 +203,11 @@ def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml
     model.load_weights(tf.train.latest_checkpoint(model_path))
     model.build(tf.TensorShape([1, None]))
     text_generated = do_generation(model,
-                                   params_gen['gen_start_string'],
                                    params_gen['gen_length'],
                                    params_gen['n_generations'],
                                    params_gen['temperature'],
                                    token2idx, idx2token,
-                                   params_data['lowercase'],  # TODO we will do the same in generation...
-                                   params_data['token_level'])  # TODO we will do the same in generation...
+                                   params_data['token_level'])
     timestamp = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')
     try:
         os.mkdir(join(model_path, 'text_generated'))
@@ -201,9 +220,10 @@ def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml
     logging.debug(f"Text generated at {text_generated_path}")
 
 
-# ----------------------
+# ----------
+# Script
+# ----------
 def run(path_params: str):
-    # path_params = "./pistoBot/01_RNN/rnn_vanilla_params.yaml"
     # Load params
     params = load_yaml(path_params)
     params_data = params['data']
@@ -242,11 +262,13 @@ def run(path_params: str):
 
     # Generate examples
     generate_text_main(idx2token, model_path, params_data, params_gen, params_ml, token2idx)
+    logging.info("Generation completed")
 
 
 def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
-    parser.add_argument("--path_params", help="Path to rnn YAML params", default="./rnn_vanilla_params.yaml")
+    parser.add_argument("--path_params", help="Path to rnn YAML params",
+                        default="./pistoBot/01_RNN/rnn_vanilla_params.yaml")
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     args = parser.parse_args(argv[1:])
     loglevel = logging.DEBUG if args.verbose else logging.INFO

@@ -28,12 +28,12 @@ def my_init(run):
     return run
 
 
-def get_my_info(file_path: str = "../../data/inputs/personal/my-keys.txt") -> dict:
+def get_my_info(file_path: str = "./data/inputs/personal/my-keys.txt") -> dict:
     """
     Read and return all personal
     info that will not upload on github.
 
-    File .txt for .gitignore
+    > my-keys is a .txt file for .gitignore
     """
     my_info = None
     if path.exists(file_path):

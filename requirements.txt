@@ -1,3 +1,4 @@
 PyYAML==5.3.1
 humanfriendly==8.1
 knockknock==0.1.8.1
+tensorflow>=2.0.0

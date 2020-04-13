@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
 cd ..
 
-pip install -r requirements.txt
+echo "Installing requirements..."
+pip install -r requirements.txt -q
 
-cd ./pistoBot/01_RNN/
+echo "Training model..."
+python ./pistoBot/01_RNN/rnn_vanilla.py
 
-python 02_rnn_vanilla.py -v
-
-cd ../../colab/
-
-bash ./download_models_trained.sh
+cd ./colab/
+bash ./utils/download_models_trained.sh

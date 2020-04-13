@@ -1,5 +1,5 @@
 """
-Code used to study the TF official code:
+Code used to study the TF official example:
 https://www.tensorflow.org/tutorials/text/text_generation
 """
 import datetime

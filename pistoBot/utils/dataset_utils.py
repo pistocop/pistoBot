@@ -34,12 +34,4 @@ def create_vocabulary(text_tokenized: List[str]) -> Tuple[dict, np.ndarray]:
     return token2idx, idx2token
 
 
-def print_input_batch(dataset_ml, idx2token: np.ndarray):
-    logging.info("----------------------------")
-    logging.info("[Example of ML batch]")
-    logging.info("train --> label")
-    for x_batch, y_batch in dataset_ml.take(1):
-        # Take one batch
-        for idx, (batch_el_x, batch_el_y) in enumerate(zip(x_batch, y_batch)):
-            logging.info(f"{idx} | {idx2token[batch_el_x.numpy()]} --> {idx2token[batch_el_y.numpy()]}")
-    logging.info("----------------------------")
+

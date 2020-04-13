@@ -1,4 +1,10 @@
-# Colab resources
+# 🤖 pistoBot
+Python resource used to train different ML models to generate text learning from personal chats.
 
-- Copy/paste tf rnn generator: [link](https://colab.research.google.com/drive/19padYtFaGoiN6j4g6Fe5kxJV3wZvG7a6#scrollTo=Y3w2zT-RPwAC)
+## 🖊 Personal chats
+You can extract messages wrote by yourself using [this](https://github.com/GuardatiSimone/messaging-chat-parser) repository
 
+## 🎭 Models available:
+- RNN vanilla - under `/01_RNN/`
+    - Based on official [tensorflow example](https://www.tensorflow.org/tutorials/text/text_generation) 
+    
