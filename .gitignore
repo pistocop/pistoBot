@@ -225,4 +225,10 @@ dmypy.json
 **/*.txt
 **/*.zip
 !requirements.txt
-data/models_trained/01_rnn*
+
+data/models_trained/*
+!data/models_trained/.gitkeep
+
+/data/inputs/personal/*
+!/data/inputs/personal/.gitkeep
+
