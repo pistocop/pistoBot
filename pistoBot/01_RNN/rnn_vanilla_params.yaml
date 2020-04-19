@@ -14,5 +14,5 @@ ml:
   save_path: "./data/models_trained/"
 generation:
   gen_length: 10
-  n_generations: 100 # Each generation will start with one random token
+  n_generations: 500 # Each generation will start with one random token
   temperature: 1.0
