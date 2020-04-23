@@ -11,6 +11,7 @@ At top layer the "common" requirements and each model have custom `requirements.
 # 📝 Note
 - Thanks to Salvinator: Under Covid 19 quarantine I found [this](https://salvinator.github.io/) project, 
 that had inspired me to start this repository.
+- Why _pistoBot_? 
 ---
 # ⚠ Disclaimer
 This project is only a **personal playground** build during the week-ends of Covid-19 quarantine.<br>
@@ -20,7 +21,6 @@ Used mainly to:
 - Gain (little) experience
 
 Due to this nature, this repository has probably: 
-- ML _bad practices_ 
-- Inefficient code
+- ML _naif approaches_ 
 - For sure: not so good english text (sorry 😢)
-- Maybe something similar already exist 
+- Maybe something similar already exist
