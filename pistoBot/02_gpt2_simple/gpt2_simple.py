@@ -1,8 +1,9 @@
 import sys
 import logging
 import argparse
-from os.path import basename, normpath
+from os.path import basename, normpath, join
 import gpt_2_simple as gpt2  # Memo: tf 1.x needed
+import yaml
 
 sys.path.append("./")  # needed 4 utils imports - created according to launcher
 from pistoBot.utils.general_utils import my_init, load_yaml
@@ -38,6 +39,12 @@ def run(path_params: str):
                   model_dir=params_ml['model_dir'],
                   prefix=params_gen['prefix'],
                   temperature=params_gen['temperature'])
+
+    # Save params
+    model_params_path = join(params_ml['model_dir'], 'gpt2_simple_params.yaml')
+    with open(model_params_path, 'w') as f:
+        yaml.dump(params, f, default_flow_style=False)
+    logging.debug(f"Model params saved at {model_params_path}")
 
 
 def main(argv):
