@@ -195,7 +195,7 @@ def do_generation(model,
     return texts_generated
 
 
-def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml, token2idx):
+def generate_text(idx2token, model_path, params_data, params_gen, params_ml, token2idx):
     model = build_nn(params_ml=params_ml,
                      vocab_size=len(token2idx),
                      seq_length=params_data["seq_length"],
@@ -209,10 +209,7 @@ def generate_text_main(idx2token, model_path, params_data, params_gen, params_ml
                                    token2idx, idx2token,
                                    params_data['token_level'])
     timestamp = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S')
-    try:
-        os.mkdir(join(model_path, 'text_generated'))
-    except FileExistsError:
-        logging.debug(f"Folder '{model_path}/text_generated' already exist")
+    os.makedirs(join(model_path, 'text_generated'), exist_ok=True)
     text_generated_path = join(model_path, 'text_generated', f'{timestamp}.txt')
 
     with open(text_generated_path, 'w') as f:
@@ -261,7 +258,7 @@ def run(path_params: str):
     save_model_info(params, model_path, token2idx, idx2token)
 
     # Generate examples
-    generate_text_main(idx2token, model_path, params_data, params_gen, params_ml, token2idx)
+    generate_text(idx2token, model_path, params_data, params_gen, params_ml, token2idx)
     logging.info("Generation completed")
 
 
