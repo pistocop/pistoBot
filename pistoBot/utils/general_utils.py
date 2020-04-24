@@ -15,7 +15,8 @@ def load_yaml(path: str):
 
 def my_init(run):
     download("punkt")
-    tf.random.set_seed(42)
+    if tf.__version__ >= '2.0.0':
+        tf.random.set_seed(42)
 
     # Enable telegram start and stop notification
     my_info = get_my_info()
