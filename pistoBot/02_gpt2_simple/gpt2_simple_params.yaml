@@ -1,5 +1,5 @@
 data:
-  file_path: "./data/inputs/personal/simmy_join.txt"
+  file_path: "../../drive/My\ Drive/pistoBot/personal/wa_chats.txt"
   model_dir: "models"
 ml:
   # Params ref: https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=wmTXWNUygS5E@

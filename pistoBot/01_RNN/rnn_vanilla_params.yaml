@@ -1,5 +1,5 @@
 data:
-  file_path: "./data/inputs/personal/simmy_join.txt"
+  file_path: "../../drive/My\ Drive/pistoBot/personal/wa_chats.txt"
   file_encoding: "utf-8"
   token_level: "word"
   seq_length: 3

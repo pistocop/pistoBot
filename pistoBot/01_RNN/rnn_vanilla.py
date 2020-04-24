@@ -266,13 +266,14 @@ def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
     parser.add_argument("--path_params", help="Path to rnn YAML params",
                         default="./pistoBot/01_RNN/rnn_vanilla_params.yaml")
+    parser.add_argument("--local", help="set if code is not running on colab", action="store_true", default=False)
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     args = parser.parse_args(argv[1:])
     loglevel = logging.DEBUG if args.verbose else logging.INFO
     process_name = basename(normpath(argv[0]))
     logging.basicConfig(format=f"[{process_name}][%(levelname)s]: %(message)s", level=loglevel, stream=sys.stdout)
     delattr(args, "verbose")
-    run_initialized = my_init(run)
+    run_initialized = my_init(run, args.local)
     run_initialized(**vars(args))
 
 

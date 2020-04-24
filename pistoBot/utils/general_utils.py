@@ -13,13 +13,14 @@ def load_yaml(path: str):
     return yaml_dict
 
 
-def my_init(run):
+def my_init(run, local: bool):
     download("punkt")
     if tf.__version__ >= '2.0.0':
         tf.random.set_seed(42)
 
     # Enable telegram start and stop notification
-    my_info = get_my_info()
+    my_info_path = "./data/inputs/personal/my-keys.txt" if local else "../../drive/My\ Drive/pistoBot/personal/my-keys.txt"
+    my_info = get_my_info(my_info_path)
     if my_info:
         logging.info("Telegram notification enabled")
         from knockknock import telegram_sender
@@ -29,12 +30,12 @@ def my_init(run):
     return run
 
 
-def get_my_info(file_path: str = "./data/inputs/personal/my-keys.txt") -> dict:
+def get_my_info(file_path: str) -> dict:
     """
-    Read and return all personal
-    info that will not upload on github.
+    Read and return all personal info.
+    Used to load personal keys used in useful features.
 
-    > my-keys is a .txt file for .gitignore
+    e.g. load telegram token to send notification of start and stop training.
     """
     my_info = None
     if path.exists(file_path):
