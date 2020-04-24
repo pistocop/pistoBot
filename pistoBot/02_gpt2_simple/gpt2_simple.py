@@ -12,7 +12,7 @@ sys.path.append("./")  # needed 4 utils imports - created according to launcher
 from pistoBot.utils.general_utils import my_init, load_yaml
 
 
-def run(path_params: str):
+def run(path_params: str, local: bool):
     # Input
     params = load_yaml(path_params)
     params_data = params['data']
@@ -68,8 +68,8 @@ def main(argv):
     loglevel = logging.DEBUG if args.verbose else logging.INFO
     process_name = basename(normpath(argv[0]))
     logging.basicConfig(format=f"[{process_name}][%(levelname)s]: %(message)s", level=loglevel, stream=sys.stdout)
-    delattr(args, "verbose")
     run_initialized = my_init(run, args.local)
+    delattr(args, "verbose")
     run_initialized(**vars(args))
 
 
