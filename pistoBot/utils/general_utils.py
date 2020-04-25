@@ -19,7 +19,7 @@ def my_init(run, local: bool = None):
         tf.random.set_seed(42)
 
     # Enable telegram start and stop notification
-    my_info_path = "./data/inputs/personal/my-keys.txt" if local else "../drive/My\ Drive/pistoBot/personal/my-keys.txt"
+    my_info_path = "./data/inputs/personal/my-keys.txt" if local else "../drive/My Drive/pistoBot/personal/my-keys.txt"
     my_info = get_my_info(my_info_path)
     if my_info:
         logging.info("Telegram notification enabled")
