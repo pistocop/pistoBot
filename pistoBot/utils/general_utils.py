@@ -44,4 +44,5 @@ def get_my_info(file_path: str) -> dict:
             logging.debug(f"Keys file at {file_path} loaded with {my_info.keys()} values")
     else:
         logging.warning(f"Keys file at {file_path} not found")
+        raise ValueError(f"Keys file at {file_path} not found")
     return my_info
