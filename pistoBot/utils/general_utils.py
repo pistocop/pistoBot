@@ -21,10 +21,10 @@ def my_init(run, local: bool = None):
     # Enable telegram start and stop notification
     if local:
         my_info_path = "./data/inputs/personal/my-keys.txt"
-        logging.info(f"The local flag enabled. Keys at {my_info_path}")
+        logging.debug(f"The local flag enabled. Keys at {my_info_path}")
     else:
         my_info_path = "./drive/My\ Drive/pistoBot/personal/my-keys.txt"
-        logging.info(f"The colab flag enabled. Keys at {my_info_path}")
+        logging.debug(f"The colab flag enabled. Keys at {my_info_path}")
     my_info = get_my_info(my_info_path)
     if my_info:
         logging.info("Telegram notification enabled")
