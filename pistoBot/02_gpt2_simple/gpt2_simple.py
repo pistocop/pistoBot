@@ -19,6 +19,10 @@ def run(path_params: str, local: bool):
     params_ml = params['ml']
     params_gen = params['generation']
 
+    if logging.getLogger().getEffectiveLevel() == logging.DEBUG:
+        logging.debug(f"Params: {params}")
+        input_dataset = open(params_data['file_path'], 'r').readlines()
+        logging.debug(f"Input file: {params_data['file_path']} have {len(input_dataset)} lines")
     # Init
     gpt2.download_gpt2(model_name="124M")
 
