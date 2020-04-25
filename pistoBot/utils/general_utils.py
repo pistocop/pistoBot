@@ -19,12 +19,7 @@ def my_init(run, local: bool = None):
         tf.random.set_seed(42)
 
     # Enable telegram start and stop notification
-    if local:
-        my_info_path = "./data/inputs/personal/my-keys.txt"
-        logging.debug(f"The local flag enabled. Keys at {my_info_path}")
-    else:
-        my_info_path = "../drive/My\ Drive/pistoBot/personal/my-keys.txt"
-        logging.debug(f"The colab flag enabled. Keys at {my_info_path}")
+    my_info_path = "./data/inputs/personal/my-keys.txt" if local else "../drive/My\ Drive/pistoBot/personal/my-keys.txt"
     my_info = get_my_info(my_info_path)
     if my_info:
         logging.info("Telegram notification enabled")
@@ -46,4 +41,7 @@ def get_my_info(file_path: str) -> dict:
     if path.exists(file_path):
         with open(file_path, 'r') as f:
             my_info = json.load(f)
+            logging.debug(f"Keys file at {file_path} loaded with {my_info.keys()} values")
+    else:
+        logging.warning(f"Keys file at {file_path} not found")
     return my_info
