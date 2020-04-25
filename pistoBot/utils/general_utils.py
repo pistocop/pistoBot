@@ -37,7 +37,6 @@ def get_my_info(file_path: str) -> dict:
 
     e.g. load telegram token to send notification of start and stop training.
     """
-    my_info = None
     if path.exists(file_path):
         with open(file_path, 'r') as f:
             my_info = json.load(f)
