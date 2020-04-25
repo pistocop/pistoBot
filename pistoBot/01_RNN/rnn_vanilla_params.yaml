@@ -1,5 +1,5 @@
 data:
-  file_path: "../../drive/My\ Drive/pistoBot/personal/wa_chats.txt"
+  file_path: "../../drive/My\ Drive/pistoBot/personal/chat_parsed/user-messages.txt"
   file_encoding: "utf-8"
   token_level: "word"
   seq_length: 3
