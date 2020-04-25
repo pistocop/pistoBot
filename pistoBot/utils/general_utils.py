@@ -23,7 +23,7 @@ def my_init(run, local: bool = None):
         my_info_path = "./data/inputs/personal/my-keys.txt"
         logging.debug(f"The local flag enabled. Keys at {my_info_path}")
     else:
-        my_info_path = "./drive/My\ Drive/pistoBot/personal/my-keys.txt"
+        my_info_path = "../drive/My\ Drive/pistoBot/personal/my-keys.txt"
         logging.debug(f"The colab flag enabled. Keys at {my_info_path}")
     my_info = get_my_info(my_info_path)
     if my_info:
