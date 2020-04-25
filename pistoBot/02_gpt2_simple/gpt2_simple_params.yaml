@@ -1,5 +1,5 @@
 data:
-  file_path: "../../drive/My\ Drive/pistoBot/personal/chat_parsed/chats.txt"
+  file_path: "./drive/My\ Drive/pistoBot/personal/chat_parsed/chats.txt"
   model_dir: "models"
 ml:
   # Params ref: https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=wmTXWNUygS5E@
