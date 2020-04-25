@@ -13,13 +13,18 @@ def load_yaml(path: str):
     return yaml_dict
 
 
-def my_init(run, local: bool):
+def my_init(run, local: bool = None):
     download("punkt")
     if tf.__version__ >= '2.0.0':
         tf.random.set_seed(42)
 
     # Enable telegram start and stop notification
-    my_info_path = "./data/inputs/personal/my-keys.txt" if local else "../../drive/My\ Drive/pistoBot/personal/my-keys.txt"
+    if local:
+        my_info_path = "./data/inputs/personal/my-keys.txt"
+        logging.info(f"The local flag enabled. Keys at {my_info_path}")
+    else:
+        my_info_path = "./drive/My\ Drive/pistoBot/personal/my-keys.txt"
+        logging.info(f"The colab flag enabled. Keys at {my_info_path}")
     my_info = get_my_info(my_info_path)
     if my_info:
         logging.info("Telegram notification enabled")

@@ -62,7 +62,7 @@ def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
     parser.add_argument("--path_params", help="Path to rnn YAML params",
                         default="./pistoBot/02_gpt2_simple/gpt2_simple_params.yaml")
-    parser.add_argument("--local", help="set if code is not running on colab", action="store_true", default=True)
+    parser.add_argument("--local", help="set if code is not running on colab", action="store_true")
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     args = parser.parse_args(argv[1:])
     loglevel = logging.DEBUG if args.verbose else logging.INFO
