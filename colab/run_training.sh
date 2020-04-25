@@ -22,7 +22,7 @@ elif [[ $1 == "gpt2-simple" ]]; then
     pip install -r ./pistoBot/02_gpt2_simple/requirements.txt
 
     echo "Training model..."
-    python ./pistoBot/02_gpt2_simple/gpt2_simple.py
+    python ./pistoBot/02_gpt2_simple/gpt2_simple.py -v
 else
     echo "$1 model not recognized"
 fi
