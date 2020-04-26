@@ -4,11 +4,11 @@ ml:
   # Params ref: https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=wmTXWNUygS5E@
   save_path: "./data/models_trained/"
   model_size: "124M"
-  steps: 100 # -1 to infinite
+  steps: 1500 # -1 to infinite
   restore_from: "fresh"
-  print_every: 100
+  print_every: 300
   sample_every: 300
-  save_every: 500
+  save_every: 300
 generation:
   prefix: "[others] come stai pistobot dio caro ?"
   temperature: 0.7

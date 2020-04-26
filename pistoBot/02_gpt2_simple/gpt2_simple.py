@@ -57,8 +57,8 @@ def run(path_params: str):
         yaml.dump(params, f, default_flow_style=False)
     logging.debug(f"Model params saved at {model_params_path}")
 
-    makedirs(join(model_dir, 'text_generated'), exist_ok=True)
-    text_generated_path = join(model_dir, 'text_generated', f'{timestamp}.txt')
+    makedirs(join(model_dir, run_name, 'text_generated'), exist_ok=True)
+    text_generated_path = join(model_dir, run_name, 'text_generated', f'{timestamp}.txt')
     open(text_generated_path, 'w').writelines('\n'.join(text_generated))
 
     logging.debug(f"Text generated saved at {text_generated_path} - {len(text_generated)} total lines")
