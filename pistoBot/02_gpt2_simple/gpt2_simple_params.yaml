@@ -3,10 +3,10 @@ data:
 ml:
   # Params ref: https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=wmTXWNUygS5E@
   save_path: "./data/models_trained/"
-  model_size: "124M"
+  model_size: "124M" # [124M , 355M]
   steps: 1500 # -1 to infinite
   restore_from: "fresh"
-  print_every: 10
+  print_every: 1
   sample_every: 300
   save_every: 300
 generation:
