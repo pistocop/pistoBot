@@ -23,6 +23,7 @@ def run(path_params: str):
     gpt2.download_gpt2(model_name="124M")
     timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
     model_dir = join(params_ml['save_path'], f"02_gp2_simple_{timestamp}")
+    makedirs(model_dir, exist_ok=False)
 
     # Fine-tune
     sess = gpt2.start_tf_sess()
