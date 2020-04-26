@@ -44,7 +44,7 @@ def run(path_params: str):
 
     # Generate
     text_generated = gpt2.generate(sess,
-                                   run_name=params_ml['run_name'],
+                                   run_name=run_name,
                                    model_dir=model_dir,
                                    model_name=model_name,
                                    prefix=params_gen['prefix'],
