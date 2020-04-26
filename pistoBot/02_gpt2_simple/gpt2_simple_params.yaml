@@ -2,7 +2,7 @@ data:
   file_path: "./data/inputs/chat_parsed/chats.txt"
 ml:
   # Params ref: https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=wmTXWNUygS5E@
-  save_path: "./data/models_trained/gpt2-simple/"
+  save_path: "./data/models_trained/"
   model_size: "124M"
   steps: 100 # -1 to infinite
   restore_from: "fresh"
