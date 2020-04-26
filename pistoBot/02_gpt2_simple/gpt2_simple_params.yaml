@@ -6,7 +6,7 @@ ml:
   model_size: "124M"
   steps: 1500 # -1 to infinite
   restore_from: "fresh"
-  print_every: 300
+  print_every: 10
   sample_every: 300
   save_every: 300
 generation:
