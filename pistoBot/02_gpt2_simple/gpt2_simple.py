@@ -20,10 +20,10 @@ def run(path_params: str):
     logging.debug(f"Params: {params}")
 
     # Init
-    gpt2.download_gpt2(model_name="124M")
     timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
-    model_dir = join(params_ml['save_path'], f"02_gp2_simple_{timestamp}")
-    makedirs(model_dir, exist_ok=False)
+    model_dir = params_ml['save_path']
+    model_name = f"02_gp2_{params_ml['model_size']}_simple_{timestamp}"
+    gpt2.download_gpt2(model_dir=model_dir, model_name=model_name)
 
     # Fine-tune
     sess = gpt2.start_tf_sess()
@@ -31,7 +31,7 @@ def run(path_params: str):
     gpt2.finetune(sess,
                   dataset=params_data['file_path'],
                   model_dir=model_dir,
-                  model_name=params_ml['model_size'],
+                  model_name=model_name,
                   steps=params_ml['steps'],
                   restore_from=params_ml['restore_from'],
                   run_name=params_ml['run_name'],
@@ -43,6 +43,7 @@ def run(path_params: str):
     text_generated = gpt2.generate(sess,
                                    run_name=params_ml['run_name'],
                                    model_dir=model_dir,
+                                   model_name=model_name,
                                    prefix=params_gen['prefix'],
                                    temperature=params_gen['temperature'],
                                    return_as_list=True)
