@@ -1,10 +1,10 @@
 import json
 import logging
-
 import yaml
+import tensorflow as tf
+
 from os import path
 from nltk import download
-import tensorflow as tf
 
 
 def load_yaml(path: str):
@@ -13,13 +13,13 @@ def load_yaml(path: str):
     return yaml_dict
 
 
-def my_init(run, local: bool = None):
+def my_init(run):
     download("punkt")
     if tf.__version__ >= '2.0.0':
         tf.random.set_seed(42)
 
     # Enable telegram start and stop notification
-    my_info_path = "./data/inputs/personal/my-keys.txt" if local else "../drive/My Drive/pistoBot/personal/my-keys.txt"
+    my_info_path = "./data/inputs/personal/my-keys.txt"  # [!] path from launchers pov
     my_info = get_my_info(my_info_path)
     if my_info:
         logging.info("Telegram notification enabled")
@@ -43,5 +43,4 @@ def get_my_info(file_path: str) -> dict:
             logging.debug(f"Keys file at {file_path} loaded with {my_info.keys()} values")
     else:
         logging.warning(f"Keys file at {file_path} not found")
-        raise ValueError(f"Keys file at {file_path} not found")
     return my_info

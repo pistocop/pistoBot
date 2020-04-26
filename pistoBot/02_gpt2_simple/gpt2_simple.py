@@ -11,7 +11,7 @@ sys.path.append("./")  # needed 4 utils imports - created according to launcher
 from pistoBot.utils.general_utils import my_init, load_yaml
 
 
-def run(path_params: str, local: bool):
+def run(path_params: str):
     # Input
     params = load_yaml(path_params)
     params_data = params['data']
@@ -63,13 +63,12 @@ def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
     parser.add_argument("--path_params", help="Path to rnn YAML params",
                         default="./pistoBot/02_gpt2_simple/gpt2_simple_params.yaml")
-    parser.add_argument("--local", help="set if code is not running on colab", action="store_true")
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     args = parser.parse_args(argv[1:])
     loglevel = logging.DEBUG if args.verbose else logging.INFO
     process_name = basename(normpath(argv[0]))
     logging.basicConfig(format=f"[{process_name}][%(levelname)s]: %(message)s", level=loglevel, stream=sys.stdout)
-    run_initialized = my_init(run, args.local)
+    run_initialized = my_init(run)
     delattr(args, "verbose")
     run_initialized(**vars(args))
 

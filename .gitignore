@@ -229,6 +229,9 @@ dmypy.json
 data/models_trained/*
 !data/models_trained/.gitkeep
 
-/data/inputs/personal/*
+data/inputs/personal/*
 !/data/inputs/personal/.gitkeep
+
+data/inputs/chat_parsed/*
+!/data/inputs/chat_parsed/.gitkeep
 

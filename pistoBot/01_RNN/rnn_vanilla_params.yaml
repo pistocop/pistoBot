@@ -1,5 +1,5 @@
 data:
-  file_path: "../drive/My\ Drive/pistoBot/personal/chat_parsed/user-messages.txt"
+  file_path: "./data/inputs/chat_parsed/user-messages.txt"
   file_encoding: "utf-8"
   token_level: "word"
   seq_length: 3
@@ -11,7 +11,7 @@ ml:
   rnn_units: 1024
   dropout: 0.3
   epochs: 30
-  save_path: "./data/models_trained/"
+  save_path: "./data/models_trained/rnn-vanilla/"
 generation:
   gen_length: 10
   n_generations: 500 # Each generation will start with one random token
