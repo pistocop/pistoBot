@@ -22,19 +22,22 @@ def run(path_params: str):
     # Init
     timestamp = datetime.utcnow().strftime('%Y%m%d%H%M%S')
     model_dir = params_ml['save_path']
-    model_name = f"02_gp2_{params_ml['model_size']}_simple_{timestamp}"
-    gpt2.download_gpt2(model_dir=model_dir, model_name=model_name)
+    model_name = params_ml['model_size']  # Used from GPT2 to check if model is '117M' or '124M'
+    run_name = f"02_gp2simple_{params_ml['model_size']}_{timestamp}"
+
+    gpt2.download_gpt2(model_name=model_name, model_dir=model_dir)
 
     # Fine-tune
     sess = gpt2.start_tf_sess()
 
     gpt2.finetune(sess,
-                  dataset=params_data['file_path'],
                   model_dir=model_dir,
                   model_name=model_name,
+                  checkpoint_dir=model_dir,
+                  run_name=run_name,
+                  dataset=params_data['file_path'],
                   steps=params_ml['steps'],
                   restore_from=params_ml['restore_from'],
-                  run_name=params_ml['run_name'],
                   print_every=params_ml['print_every'],
                   sample_every=params_ml['sample_every'],
                   save_every=params_ml['save_every'])

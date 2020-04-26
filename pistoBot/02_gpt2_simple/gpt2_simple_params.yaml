@@ -6,7 +6,6 @@ ml:
   model_size: "124M"
   steps: 100 # -1 to infinite
   restore_from: "fresh"
-  run_name: "gpt2_pistobot"
   print_every: 100
   sample_every: 300
   save_every: 500
