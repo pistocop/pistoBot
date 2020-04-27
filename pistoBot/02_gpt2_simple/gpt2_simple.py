@@ -37,6 +37,7 @@ def run(path_params: str):
                   run_name=run_name,
                   dataset=params_data['file_path'],
                   steps=params_ml['steps'],
+                  learning_rate=params_ml['learning_rate'],
                   restore_from=params_ml['restore_from'],
                   print_every=params_ml['print_every'],
                   sample_every=params_ml['sample_every'],
