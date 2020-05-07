@@ -1,5 +1,5 @@
 data:
-  file_path: "./data/inputs/chat_parsed/chats.txt"
+  file_path: "./data/inputs/chat_parsed/all-messages-endoftext.txt"
 ml:
   # Params ref: https://colab.research.google.com/drive/1VLG8e7YSEwypxU-noRNhsv5dW4NfTGce#scrollTo=wmTXWNUygS5E@
   learning_rate: 0.0001 # 1e-4 default
