@@ -221,6 +221,7 @@ def generate_text(idx2token, model_path, params_data, params_gen, params_ml, tok
 # Script
 # ----------
 def run(path_params: str, local: bool):
+    path_params = "quello che deve "
     # Load params
     params = load_yaml(path_params)
     params_data = params['data']
@@ -233,6 +234,7 @@ def run(path_params: str, local: bool):
                                                                 params_data['file_encoding'],
                                                                 params_data['token_level'],
                                                                 params_data['lowercase'])
+
     dataset_ml = dataset_prepare(text_tokenized,
                                  token2idx,
                                  params_data['seq_length'],

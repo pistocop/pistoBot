@@ -17,7 +17,7 @@ that had inspired me to start this repository.
 This project is only a **personal playground** build during the week-ends of Covid-19 quarantine.<br>
 Used mainly to:
 - Write code on tensorflow 2.0
-- Use famous packages (like [gpt-2-simple](https://github.com/minimaxir/gpt-2-simple))
+- Use famous packages (like [gpt-2-simple](https://github.com/minimaxir/gpt-2-simple) or [Jekyll](https://jekyllrb.com/))
 - Gain (little) experience
 
 Due to this nature, this repository has probably: 

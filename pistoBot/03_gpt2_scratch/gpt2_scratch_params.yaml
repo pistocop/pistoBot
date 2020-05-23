@@ -1,0 +1,13 @@
+data:
+  file_path: "./data/inputs/chat_parsed/all-messages-endoftext.txt"
+ml:
+  save_path: "./data/models_trained/"
+  model_size: "124M" # [124M , 355M]
+  steps: 1500 # -1 to infinite
+  restore_from: "fresh"
+  print_every: 1
+  sample_every: 300
+  save_every: 300
+generation:
+  prefix: "[others] come stai pistobot dio caro ?"
+  temperature: 0.7
