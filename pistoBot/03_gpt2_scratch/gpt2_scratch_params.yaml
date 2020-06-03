@@ -2,6 +2,7 @@ data:
   file_path: "./data/inputs/chat_parsed/all-messages-endoftext.txt"
 ml:
   save_path: "./data/models_trained/"
+
   vocab_size: 5000
   tokenizer_dropout: 0.0 # 0=disabled
   tokens_min_frequency: 2
@@ -11,9 +12,9 @@ ml:
   model_n_embd: 256 # Dimensionality of the embeddings and hidden states.
   model_n_layer: 8 # Number of hidden layers in the Transformer encoder.
   model_n_head: 8 # Number of attention heads for each attention layer in the Transformer encoder.
-  # See class `GPT2Config(PretrainedConfig)` for more info and params
+  # See class `GPT2Config(PretrainedConfig)` for more info and parameters
 
-  train_steps: 10000 # 30000
+  train_steps: 1000 # 30000
   train_generate_every: 1000
   train_save_every: 1000
   train_learning_rate: 0.0001
@@ -21,4 +22,13 @@ ml:
 
 generation:
   prefix: "[others] come stai pistobot dio caro ?"
-  temperature: 0.7
+  temperature: 0.7 # Determines the "creativity" of the generated text. The value range is different for each type of Transformer.
+  n_text: 100 # Numbers of texts to generate.
+  batch_size: 1 # Number of texts to generate simultaneously
+  seed: 42
+  cleanup: True # Remove empty texts and strip out extra newlines/extra spaces
+  max_length: 256 # Maximum length for the generated text
+  top_p: 0.9 # The cumulative probability of parameter highest probability vocabulary tokens to keep for nucleus sampling. Must be between 0 and 1. Default to 1.
+  repetition_penalty: 1.0 # The parameter for repetition penalty. Between 1.0 and infinity. 1.0 means no penalty. Default to 1.0.
+  early_stopping: False # if set to `True` beam search is stopped when at least `num_beams` sentences finished per batch. Defaults to `False` as defined in `configuration_utils.PretrainedConfig`.
+  num_beams: 1 # Number of beams for beam search. Must be between 1 and infinity. 1 means no beam search. Default to 1.

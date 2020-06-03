@@ -55,14 +55,35 @@ def run(path_params: str):
 
     gpt2_model.train(params_data['file_path'],
                      line_by_line=False,
+                     output_dir=model_dir,
                      num_steps=params_ml['train_steps'],
                      generate_every=params_ml['train_generate_every'],
                      save_every=params_ml['train_save_every'],
                      save_gdrive=False,
                      learning_rate=params_ml['train_learning_rate'],
                      batch_size=params_ml['train_batch_size'])
+    logging.info("Training completed!")
 
     # Generate
+    logging.info("Generation starting...")
+    generation_folder = join(model_dir, "generation")
+    os.makedirs(generation_folder, exist_ok=True)
+    generation_file_path = join(generation_folder, f"{timestamp}.txt")
+
+    gpt2_model.generate_to_file(n=params_gen['n_text'],
+                                batch_size=params_gen['batch_size'],
+                                destination_path=generation_file_path,
+                                seed=params_gen['seed'],
+                                cleanup=params_gen['cleanup'] == 'True',
+                                prompt=params_gen['prefix'],
+                                max_length=params_gen['max_length'],
+                                temperature=params_gen['temperature'],
+                                top_p=params_gen['top_p'],
+                                repetition_penalty=params_gen['repetition_penalty'],
+                                early_stopping=params_gen['early_stopping'],
+                                num_beams=params_gen['num_beams'])
+    logging.info("Generation completed!")
+
 
 def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
