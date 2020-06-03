@@ -9,16 +9,16 @@ import datetime
 import json
 import os
 import random
+import yaml
 import sys
 import logging
 import argparse
 import numpy as np
 import tensorflow as tf
 
+from nltk import download
 from os.path import basename, normpath, join
 from typing import Tuple, List
-
-import yaml
 from tensorflow.python.data.ops.dataset_ops import BatchDataset
 from tensorflow.python.keras.engine.sequential import Sequential
 
@@ -221,7 +221,8 @@ def generate_text(idx2token, model_path, params_data, params_gen, params_ml, tok
 # Script
 # ----------
 def run(path_params: str, local: bool):
-    path_params = "quello che deve "
+    download("punkt")
+
     # Load params
     params = load_yaml(path_params)
     params_data = params['data']

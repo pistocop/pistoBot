@@ -4,17 +4,15 @@ import yaml
 import tensorflow as tf
 
 from os import path
-from nltk import download
 
 
-def load_yaml(path: str):
-    with open(path, 'r') as f:
+def load_yaml(file_path: str):
+    with open(file_path, 'r') as f:
         yaml_dict = yaml.load(f, Loader=yaml.FullLoader)
     return yaml_dict
 
 
 def my_init(run):
-    download("punkt")
     if tf.__version__ >= '2.0.0':
         tf.random.set_seed(42)
 
