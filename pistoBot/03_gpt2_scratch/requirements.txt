@@ -1,1 +1,1 @@
-aitextgen~=0.1.1
+aitextgen~=0.2.0

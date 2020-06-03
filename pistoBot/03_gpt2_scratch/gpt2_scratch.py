@@ -7,10 +7,9 @@ from os import makedirs
 from os.path import basename, normpath, join
 from datetime import datetime
 
-from aitextgen.TokenDataset import TokenDataset
-from aitextgen.tokenizers import train_tokenizer
-from aitextgen.utils import GPT2ConfigCPU
 from aitextgen import aitextgen
+from aitextgen.tokenizers import train_tokenizer
+from aitextgen.utils import build_gpt2_config
 
 sys.path.append("./")  # needed 4 utils imports - created according to launcher
 from pistoBot.utils.general_utils import my_init, load_yaml
@@ -36,10 +35,34 @@ def run(path_params: str):
     train_tokenizer(files=params_data['file_path'],
                     dropout=dropout,
                     vocab_size=params_ml['vocab_size'],
-                    min_frequency=params_ml['min_frequency'],
+                    min_frequency=params_ml['tokens_min_frequency'],
                     save_path=model_dir)
     logging.info("Training tokenizer completed!")
 
+    # Train GPT-2 model
+    logging.info("Training model...")
+    gpt2_config = build_gpt2_config(vocab_size=params_ml['vocab_size'],
+                                    max_length=params_ml['model_max_length'],
+                                    dropout=params_ml['model_dropout'],
+                                    n_embd=params_ml['model_n_embd'],
+                                    n_layer=params_ml['model_n_layer'],
+                                    n_head=params_ml['model_n_head'])
+    logging.debug(f'Gpt2 configuration:{gpt2_config}')
+    gpt2_model = aitextgen(config=gpt2_config,
+                           vocab_file=join(model_dir, "aitextgen-vocab.json"),
+                           merges_file=join(model_dir, "aitextgen-merges.txt"),
+                           to_gpu=True)
+
+    gpt2_model.train(params_data['file_path'],
+                     line_by_line=False,
+                     num_steps=params_ml['train_steps'],
+                     generate_every=params_ml['train_generate_every'],
+                     save_every=params_ml['train_save_every'],
+                     save_gdrive=False,
+                     learning_rate=params_ml['train_learning_rate'],
+                     batch_size=params_ml['train_batch_size'])
+
+    # Generate
 
 def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
