@@ -84,6 +84,12 @@ def run(path_params: str):
                                 num_beams=params_gen['num_beams'])
     logging.info("Generation completed!")
 
+    # Output persist
+    model_params_path = join(model_dir, 'gpt2_scratch_params.yaml')
+    with open(model_params_path, 'w') as f:
+        yaml.dump(params, f, default_flow_style=False)
+    logging.debug(f"Model params saved at {model_params_path}")
+
 
 def main(argv):
     parser = argparse.ArgumentParser(prog=argv[0])
