@@ -64,6 +64,11 @@ def run(path_params: str):
                      batch_size=params_ml['train_batch_size'])
     logging.info("Training completed!")
 
+    # Save model
+    logging.info("Saving starting...!")
+    gpt2_model.save()
+    logging.info("Saving completed!")
+
     # Generate
     logging.info("Generation starting...")
     generation_folder = join(model_dir, "generation")
