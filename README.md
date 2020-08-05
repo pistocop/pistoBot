@@ -3,31 +3,29 @@
 Use different AI system trained on user messages (whatsapp and telegram) to generate user-like chats.
 
 # In a nutshell
-- Get your whatsapp and telegram data
-- Parse it using [this](https://github.com/GuardatiSimone/messaging-chat-parser)
-- Train one of the [available](https://github.com/GuardatiSimone/pistoBot/tree/master/pistoBot) models
-- Chat with the model
+1. Get your whatsapp and telegram data
+2. Parse it using [this](https://github.com/GuardatiSimone/messaging-chat-parser)
+3. Train one of the [available](https://github.com/GuardatiSimone/pistoBot/tree/master/pistoBot) models
+4. Chat with the model
 
 - :point_right: A colab notebook that perform all steps will be provided soon 
 
-**Example of chat**
+## Example of chat
 
 An example of GPT-2 model trained on my whatsapp and telegram messages.
 
-Tags meaning: 
-- `[:pencil2:]` indicate a message that I have wrote
-- `[:robot:]` indicate a message generated from the model
+**Tags meaning:**
+- :pencil2: indicate a message that I have wrote
+- :robot: indicate a message generated from the model
 
-Chat:
-```
-[:pencil2:] come sei messo col pistobot?
-[:robot:] ahaha male
-[:pencil2:] chatta meglio di te? 😂
-[ :robot: ] si
-[:pencil2:] non che ci volesse molto...
-[:robot:] ma tu che dici
-[:pencil2:] io dico che potevi impegnarti di più
-```
+**Chat:**<br>
+> :pencil2: come sei messo col pistobot?<br>
+> :robot: ahaha male<br>
+> :pencil2: chatta meglio di te? 😂 <br>
+> :robot: si <br>
+> :pencil2: non che ci volesse molto... <br>
+> :robot: ma tu che dici <br>
+> :pencil2: io dico che potevi impegnarti di più <br>
 
 ---
 
