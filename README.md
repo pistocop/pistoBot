@@ -23,7 +23,6 @@ An example of GPT-2 model trained on my whatsapp and telegram messages.
 > :robot: ma tu che dici <br>
 > :pencil2: io dico che potevi impegnarti di più <br>
 
-Tags:<br>
 :pencil2: ⟶ message that I have wrote<br>
 :robot: ⟶ message generated from the model<br>
 
