@@ -8,7 +8,7 @@ Use different AI system trained on user messages (whatsapp and telegram) to gene
 3. Train one of the [available](https://github.com/GuardatiSimone/pistoBot/tree/master/pistoBot) models
 4. Chat with the model
 
-- :point_right: A colab notebook that perform all steps will be provided soon 
+:point_right: A colab notebook that perform all steps will be provided soon 
 
 ## Example of chat
 
