@@ -1,11 +1,39 @@
 # 🤖 pistoBot (work in progress)
-Use different AI system fine-tuned on user whatsapp data to generate chats-like text
 
-This code has only been tested with Python >= 3.6.
+Use different AI system trained on user messages (whatsapp and telegram) to generate user-like chats.
+
+# In a nutshell
+- Get your whatsapp and telegram data
+- Parse it using [this](https://github.com/GuardatiSimone/messaging-chat-parser)
+- Train one of the [available](https://github.com/GuardatiSimone/pistoBot/tree/master/pistoBot) models
+- Chat with the model
+
+- :point_right: A colab notebook that perform all steps will be provided soon 
+
+**Example of chat**
+
+An example of GPT-2 model trained on my whatsapp and telegram messages.
+
+Tags meaning: 
+- `[:pencil2:]` indicate a message that I have wrote
+- `[:robot:]` indicate a message generated from the model
+
+Chat:
+```
+[:pencil2:] come sei messo col pistobot?
+[:robot:] ahaha male
+[:pencil2:] chatta meglio di te? 😂
+[ :robot: ] si
+[:pencil2:] non che ci volesse molto...
+[:robot:] ma tu che dici
+[:pencil2:] io dico che potevi impegnarti di più
+```
 
 ---
-- **Requirements**<br>
-At top layer the "common" requirements and each model have custom `requirements.txt`.
+
+**Requirements**<br>
+- At top layer the "common" requirements and each model have custom `requirements.txt`.
+- This code has only been tested with Python >= 3.6.
 
 ---
 # 📝 Note
@@ -23,4 +51,3 @@ Used mainly to:
 Due to this nature, this repository has probably: 
 - ML _naif approaches_ 
 - For sure: not so good english text (sorry 😢)
-- Maybe something similar already exist

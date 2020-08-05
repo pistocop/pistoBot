@@ -7,6 +7,9 @@ You can extract messages wrote by yourself using [this](https://github.com/Guard
 ## 🎭 Models available:
 - RNN vanilla - under `/01_RNN/`
     - Based on official [tensorflow example](https://www.tensorflow.org/tutorials/text/text_generation)
-- GPT-2 pre trained - under `/02_gpt2/` 
+- GPT-2 pre trained - under `/02_gpt2_simple/` 
     - Based on [`gpt-2-simple`](https://github.com/minimaxir/gpt-2-simple) package
-    - Can't read text with less of 30K rows (TODO: IS TRUE????)
+    
+- GPT-2 trained from scratch - under `03_gpt2_scratch` folder
+   - Based on [aitextgen](https://github.com/minimaxir/aitextgen)
+   
