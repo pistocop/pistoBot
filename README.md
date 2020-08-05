@@ -16,9 +16,8 @@ An example of GPT-2 model trained on my whatsapp and telegram messages.
 
 **Chat:**<br>
 
-_Tags meaning:_<br>
-:pencil2: indicate a message that I have wrote<br>
-:robot: indicate a message generated from the model<br>
+:pencil2: ⟶ message that I have wrote<br>
+:robot: ⟶ message generated from the model<br>
 
 > :pencil2: come sei messo col pistobot?<br>
 > :robot: ahaha male<br>
