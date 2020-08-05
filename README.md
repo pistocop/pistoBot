@@ -15,10 +15,6 @@ Use different AI system trained on user messages (whatsapp and telegram) to gene
 An example of GPT-2 model trained on my whatsapp and telegram messages.
 
 **Chat:**<br>
-
-:pencil2: ⟶ message that I have wrote<br>
-:robot: ⟶ message generated from the model<br>
-
 > :pencil2: come sei messo col pistobot?<br>
 > :robot: ahaha male<br>
 > :pencil2: chatta meglio di te? 😂 <br>
@@ -26,6 +22,11 @@ An example of GPT-2 model trained on my whatsapp and telegram messages.
 > :pencil2: non che ci volesse molto... <br>
 > :robot: ma tu che dici <br>
 > :pencil2: io dico che potevi impegnarti di più <br>
+
+Tags:<br>
+:pencil2: ⟶ message that I have wrote<br>
+:robot: ⟶ message generated from the model<br>
+
 
 ---
 
