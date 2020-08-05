@@ -14,11 +14,12 @@ Use different AI system trained on user messages (whatsapp and telegram) to gene
 
 An example of GPT-2 model trained on my whatsapp and telegram messages.
 
-**Tags meaning:**
-- :pencil2: indicate a message that I have wrote
-- :robot: indicate a message generated from the model
-
 **Chat:**<br>
+
+_Tags meaning:_<br>
+:pencil2: indicate a message that I have wrote<br>
+:robot: indicate a message generated from the model<br>
+
 > :pencil2: come sei messo col pistobot?<br>
 > :robot: ahaha male<br>
 > :pencil2: chatta meglio di te? 😂 <br>
