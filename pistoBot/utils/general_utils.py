@@ -40,5 +40,6 @@ def get_my_info(file_path: str) -> dict:
             my_info = json.load(f)
             logging.debug(f"Keys file at {file_path} loaded with {my_info.keys()} values")
     else:
+        my_info = None
         logging.warning(f"Keys file at {file_path} not found")
     return my_info
