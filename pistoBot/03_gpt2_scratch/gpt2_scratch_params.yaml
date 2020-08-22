@@ -14,14 +14,14 @@ ml:
   model_n_head: 8 # Number of attention heads for each attention layer in the Transformer encoder.
   # See class `GPT2Config(PretrainedConfig)` for more info and parameters
 
-  train_steps: 1000 # 30000
-  train_generate_every: 1000
+  train_steps: 30000 # 30000
+  train_generate_every: 5000
   train_save_every: 1000
   train_learning_rate: 0.0001
   train_batch_size: 256
 
 generation:
-  prefix: "[others] come stai pistobot dio caro ?"
+  prefix: "[others] ciao!"
   temperature: 0.7 # Determines the "creativity" of the generated text. The value range is different for each type of Transformer.
   n_text: 100 # Numbers of texts to generate.
   batch_size: 1 # Number of texts to generate simultaneously
