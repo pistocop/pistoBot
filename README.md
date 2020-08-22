@@ -1,6 +1,6 @@
 # 🤖 pistoBot
 
-> Use different AI system trained on user messages (whatsapp and telegram) to generate user-like chats.
+> Use different AI systems trained on user messages (whatsapp and telegram) to generate user-like chats.
 
 # 🥜 In a nutshell
 1. Get your whatsapp and telegram data
