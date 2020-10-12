@@ -10,7 +10,8 @@
 
 ## 👀 Example of chat
 
-An example of GPT-2 model trained on my whatsapp and telegram messages.
+An example of GPT-2 model trained on my whatsapp and telegram messages.<br>
+See the [website](https://guardatisimone.github.io/pistoBot-website/) for more examples.
 
 **Chat:**<br>
 > :pencil2: come sei messo col pistobot?<br>
@@ -23,6 +24,7 @@ An example of GPT-2 model trained on my whatsapp and telegram messages.
 
 :pencil2: ⟶ message that I have wrote<br>
 :robot: ⟶ message generated from the model<br>
+
 
 # 👉 I want one
 - Create and chat with your model using [this](https://colab.research.google.com/drive/1T4-Gk-mlAWJkX9RuRd3_EiS5JBP5UvyV?usp=sharing) colab notebook
