@@ -1,6 +1,6 @@
 # 🤖 pistoBot
 
-> Create an AI to (try to) chat like you.
+> Create an AI that chats like you.
 
 # 🥜 In a nutshell
 1. Get your whatsapp and telegram data
