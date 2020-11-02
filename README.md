@@ -1,6 +1,9 @@
 # 🤖 pistoBot
 
-> Create an AI that chats like you.
+> Create an AI that chats like you. 
+
+[![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1T4-Gk-mlAWJkX9RuRd3_EiS5JBP5UvyV?usp=sharing)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://guardatisimone.github.io/pistoBot-website/)
 
 # 🥜 In a nutshell
 1. Get your whatsapp and telegram data
@@ -28,7 +31,7 @@ See the [website](https://guardatisimone.github.io/pistoBot-website/) for more e
 
 # 👉 I want one
 - Create and chat with your model using [this](https://colab.research.google.com/drive/1T4-Gk-mlAWJkX9RuRd3_EiS5JBP5UvyV?usp=sharing) colab notebook
- 
+- For more info visit the [project website](https://guardatisimone.github.io/pistoBot-website/)
 ---
 
 # :warning: Disclaimer
