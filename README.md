@@ -3,18 +3,18 @@
 > Create an AI that chats like you. 
 
 [![Open In Collab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1T4-Gk-mlAWJkX9RuRd3_EiS5JBP5UvyV?usp=sharing)
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://guardatisimone.github.io/pistoBot-website/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://pistocop.github.io/pistoBot-website/)
 
 # 🥜 In a nutshell
 1. Get your whatsapp and telegram data
-2. Parse it using [this](https://github.com/GuardatiSimone/messaging-chat-parser)
-3. Train one of the [available](https://github.com/GuardatiSimone/pistoBot/tree/master/pistoBot) models (gpt2 suggested)
+2. Parse it using [this](https://github.com/pistocop/messaging-chat-parser)
+3. Train one of the [available](https://github.com/pistocop/pistoBot/tree/master/pistoBot) models (gpt2 suggested)
 4. Chat with the model
 
 ## 👀 Example of chat
 
 An example of GPT-2 model trained on my whatsapp and telegram messages.<br>
-See the [website](https://guardatisimone.github.io/pistoBot-website/) for more examples.
+See the [website](https://pistocop.github.io/pistoBot-website/) for more examples.
 
 **Chat:**<br>
 > :pencil2: come sei messo col pistobot?<br>
@@ -31,7 +31,7 @@ See the [website](https://guardatisimone.github.io/pistoBot-website/) for more e
 
 # 👉 I want one
 - Create and chat with your model using [this](https://colab.research.google.com/drive/1T4-Gk-mlAWJkX9RuRd3_EiS5JBP5UvyV?usp=sharing) colab notebook
-- For more info visit the [project website](https://guardatisimone.github.io/pistoBot-website/)
+- For more info visit the [project website](https://pistocop.github.io/pistoBot-website/)
 ---
 
 # :warning: Disclaimer
