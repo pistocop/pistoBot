@@ -1,3 +1,4 @@
 # https://github.com/minimaxir/aitextgen/issues/33
-pytorch-lightning==0.7.6
-aitextgen~=0.2.0
+pytorch-lightning==1.5.0 
+transformers==4.21.3 
+aitextgen==0.5.0

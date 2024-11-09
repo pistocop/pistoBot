@@ -1,2 +1,2 @@
-PyYAML==5.3.1
+pyyaml>=5.1
 knockknock==0.1.8.1
